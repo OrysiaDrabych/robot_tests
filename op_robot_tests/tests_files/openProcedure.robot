@@ -1373,6 +1373,15 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
+Неможливість подати скаргу на тендер після закінчення періоду подання скарг
+  [Tags]   ${USERS.users['${provider}'].broker}: Задання запитання
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      create_tender_complaint_after_complaint_period
+  [Setup]  Дочекатись дати закінчення періоду подання скарг  ${provider}
+  Run Keyword And Expect Error  *  Можливість перетворити вимогу про виправлення умов закупівлі в скаргу
+
+
 Неможливість відповісти на запитання до тендера після завершення періоду відповідей
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
