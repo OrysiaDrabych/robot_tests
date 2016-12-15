@@ -1382,6 +1382,15 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість відповісти на запитання на тендер
 
 
+Неможливість редагувати однопредметний тендер менше ніж за 2 дні до завершення періоду подання пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      opendefense_modify_tender_in_tendering_period
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Require Failure  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  description  description
+
+
 Можливість відповісти на запитання до тендера після продовження періоду прийому пропозицій
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
   ...      tender_owner
@@ -1393,6 +1402,18 @@ ${ITEM_MEAT}        ${True}
   Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
   Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
   Можливість відповісти на запитання на тендер
+
+
+Можливість редагувати тендер після продовження періоду прийому пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      opendefense_modify_tender_in_tendering_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${new_description}=  create_fake_sentence
+  Можливість змінити поле description тендера на ${new_description}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data}  description
 
 
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
