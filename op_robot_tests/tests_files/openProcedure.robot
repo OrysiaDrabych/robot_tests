@@ -1373,6 +1373,28 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на тендер користувачем ${provider}
 
 
+Неможливість відповісти на запитання до тендера після завершення періоду відповідей
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  [Setup]  Дочекатись дати закінчення періоду відповідей на запитання  ${tender_owner}
+  Run Keyword And Expect Error  *  Можливість відповісти на запитання на тендер
+
+
+Можливість відповісти на запитання до тендера після продовження періоду прийому пропозицій
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Відповідь на запитання
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      answer_question_after_clarifications_period
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  ${endDate}=  add_minutes_to_date  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod.endDate}  3
+  Можливість змінити поле tenderPeriod.endDate тендера на ${endDate}
+  Remove From Dictionary  ${USERS.users['${tender_owner}'].tender_data.data.tenderPeriod}  endDate
+  Можливість відповісти на запитання на тендер
+
+
 Можливість редагувати однопредметний тендер більше ніж за 7 днів до завершення періоду подання пропозицій
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати тендер
   ...      tender_owner
