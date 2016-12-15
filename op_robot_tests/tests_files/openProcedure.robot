@@ -1503,6 +1503,13 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider}
 
 
+Відображення статусу тендера після закінчення прийому пропозицій в закупівлі з одним учасником
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес очікування оскаржень
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      tender_status
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+  Звірити статус тендера  ${tender_owner}  ${TENDER['TENDER_UAID']}  active.qualification
 
 ##############################################################################################
 #             OPENEU  Pre-Qualification
