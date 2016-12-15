@@ -1486,21 +1486,22 @@ ${ITEM_MEAT}        ${True}
   Run Keyword And Expect Error  *  Можливість задати запитання на 0 лот користувачем ${provider}
 
 
-Неможливість зменшити цінову пропозицію на 5% другим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      modify_bid_after_tendering_period_by_provider1
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
-  Run Keyword And Expect Error  *  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider1}
+Неможливість зменшити цінову пропозицію на 5% першим учасником після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      modify_bid_after_tendering_period_by_provider
+  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${provider}  ${TENDER['TENDER_UAID']}
+  Run Keyword And Expect Error  *  Можливість зменшити пропозицію до 95 відсотків користувачем ${provider}
 
 
-Неможливість скасувати пропозицію другим учасником після закінчення прийому пропозицій
-  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      cancel_bid_after_tendering_period_by_provider1
-  Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
+Неможливість скасувати пропозицію першим учасником після закінчення прийому пропозицій
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      cancel_bid_after_tendering_period_by_provider
+  Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider}
+
 
 
 ##############################################################################################
