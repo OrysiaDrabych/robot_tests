@@ -20,6 +20,14 @@ def create_fake_sentence():
     return fake.sentence(nb_words=10, variable_nb_words=True)
 
 
+def create_fake_title():
+    return u"[ТЕСТУВАННЯ] {}".format(fake.title())
+
+
+def create_fake_amount():
+    return fake.random_int(min=1)
+
+
 def field_with_id(prefix, sentence):
     return u"{}-{}: {}".format(prefix, fake.uuid4()[:8], sentence)
 
@@ -53,7 +61,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     value_amount = round(random.uniform(3000, 99999999999.99), 2)  # max value equals to budget of Ukraine in hryvnias
     data = {
         "mode": "test",
-        "submissionMethodDetails": "quick",
+        "submissionMethodDetails": "quick(mode:no-auction)",
         "description": fake.description(),
         "description_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
         "description_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
@@ -409,3 +417,21 @@ def test_tender_data_competitive_dialogue(params):
     data['procuringEntity']['identifier']['legalName_en'] = fake_en.sentence(nb_words=10, variable_nb_words=True)
     data['procuringEntity']['kind'] = 'general'
     return data
+
+
+def test_change_data():
+    return munchify(
+    {
+        "data":
+        {
+            "rationale": fake.description(),
+            "rationale_en": fake_en.sentence(nb_words=10, variable_nb_words=True),
+            "rationale_ru": fake_ru.sentence(nb_words=10, variable_nb_words=True),
+            "rationaleTypes": fake.rationaleTypes(amount=3),
+            "status": "pending"
+        }
+    })
+
+
+def create_fake_date():
+    return get_now().isoformat()

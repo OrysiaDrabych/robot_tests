@@ -1,5 +1,6 @@
 from openprocurement_client.client import Client
-from openprocurement_client.utils import get_tender_id_by_uaid
+from openprocurement_client.contract import ContractingClient
+from openprocurement_client.utils import get_tender_id_by_uaid, get_contract_id_by_uaid
 from openprocurement_client.exceptions import IdNotFound
 from restkit.errors import RequestFailed, BadStatusLine
 from retrying import retry
@@ -22,6 +23,16 @@ class StableClient(Client):
     @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
     def request(self, *args, **kwargs):
         return super(StableClient, self).request(*args, **kwargs)
+
+
+class ContractingStableClient(ContractingClient):
+    @retry(stop_max_attempt_number=100, wait_random_min=500, wait_random_max=4000, retry_on_exception=retry_if_request_failed)
+    def request(self, *args, **kwargs):
+        return super(ContractingStableClient, self).request(*args, **kwargs)
+
+
+def prepare_contract_api_wrapper(key, host_url, api_version):
+    return ContractingStableClient(key, host_url, api_version)
 
 
 def prepare_api_wrapper(key, host_url, api_version):
@@ -51,6 +62,10 @@ def get_document_by_id(data, doc_id):
             return document
     for complaint in data.get('complaints', []):
         for document in complaint.get('documents', []):
+            if doc_id in document.get('title', ''):
+                return document
+    for contract in data.get('contracts', []):
+        for document in contract.get('documents', []):
             if doc_id in document.get('title', ''):
                 return document
     for award in data.get('awards', []):

@@ -1,6 +1,7 @@
 *** Settings ***
 Resource        keywords.robot
 Resource        resource.robot
+Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
@@ -40,20 +41,138 @@ Suite Teardown  Test Suite Teardown
   Дочекатись дати  ${standstillEnd}
 
 
-Можливість укласти угоду для закупівлі
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
-  ...  tender_owner
-  ...  ${USERS.users['${tender_owner}'].broker}
-  ...  contract_sign  level1
+Можливість редагувати вартість угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  Run As  ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
+  ${value.amount}=  create_fake_amount
+  Set to dictionary  ${USERS.users['${tender_owner}']}  new_amount=${value.amount}
+  Run As  ${tender_owner}  Редагувати угоду  ${TENDER['TENDER_UAID']}  0  value.amount  ${value.amount}
+
+
+Відображення відредагованої вартості угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
+  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.contracts[0].value}  amount
+  Звірити поле тендера із значенням
+  ...      ${viewer}
+  ...      ${TENDER['TENDER_UAID']}
+  ...      ${USERS.users['${tender_owner}'].new_amount}
+  ...      contracts[0].value.amount
+
+
+Можливість встановити дату підписання угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Встановити дату підписання угоди  ${TENDER['TENDER_UAID']}  0
+
+
+Відображення дати підписання угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перегляд основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля contracts[0].dateSigned тендера із ${USERS.users['${tender_owner}'].dateSigned} для користувача ${viewer}
+
+
+Можливість вказати дату початку дії угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Вказати дату початку договору  ${TENDER['TENDER_UAID']}  0
+
+
+Відображення дати початку дії угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перегляд основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля contracts[0].period.startDate тендера із ${USERS.users['${tender_owner}'].contract_startDate} для користувача ${viewer}
+
+
+Можливість вказати дату завершення дії угоди
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Редагування договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As  ${tender_owner}  Вказати дату завершення договору  ${TENDER['TENDER_UAID']}  0
+
+
+Відображення дати завершення дії угоди
+  [Tags]   ${USERS.users['${viewer}'].broker}: Перегляд основних даних договору
+  ...      tender_owner
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля contracts[0].period.endDate тендера із ${USERS.users['${tender_owner}'].contract_endDate} для користувача ${viewer}
+
+
+Можливість завантажити документацію в угоду
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Додання документації до договору
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість завантажити документ в угоду 0 користувачем ${tender_owner}
+
+
+Відображення заголовку документа
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля title документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['name']} для користувача ${viewer}
+
+
+Відображення вмісту документа
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення вмісту документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із ${USERS.users['${tender_owner}']['contract_doc']['content']} для користувача ${viewer}
+
+
+Відображення прив'язки документа до тендера
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення документації
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
+  Звірити відображення поля documentOf документа ${USERS.users['${tender_owner}']['contract_doc']['id']} із tender для користувача ${viewer}
+
+
+Можливість укласти угоду для закупівлі
+  [Tags]   ${USERS.users['${tender_owner}'].broker}: Процес укладання угоди
+  ...      tender_owner
+  ...      ${USERS.users['${tender_owner}'].broker}
+  ...      contract_sign
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Run As   ${tender_owner}  Підтвердити підписання контракту  ${TENDER['TENDER_UAID']}  -1
 
 
 Відображення статусу підписаної угоди з постачальником закупівлі
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
-  ...  viewer
-  ...  ${USERS.users['${viewer}'].broker}
-  ...  contract_sign
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних угоди
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      contract_sign
   [Setup]  Дочекатись синхронізації з майданчиком    ${viewer}
   Run As  ${viewer}  Оновити сторінку з тендером  ${TENDER['TENDER_UAID']}
   Звірити поле тендера із значенням  ${viewer}  ${TENDER['TENDER_UAID']}  active  contracts[-1].status
+
+
+Відображення статусу завершення лоту
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  Звірити статус завершення тендера  ${viewer}  ${TENDER['TENDER_UAID']}
