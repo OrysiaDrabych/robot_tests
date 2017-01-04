@@ -919,7 +919,7 @@ Resource           resource.robot
 Можливість подати цінову пропозицію користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції
   ${bidresponses}=  Create Dictionary  bid=${bid}
-  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_data=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${tender_owner}'].initial_data.data.lots}  ${None}
   ${lots_ids}=  Run Keyword IF  ${lots}
   ...     Отримати ідентифікатори об’єктів  ${username}  lots
@@ -934,7 +934,7 @@ Resource           resource.robot
 Можливість подати цінову пропозицію на другий етап ${index} користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції для другого етапу  ${index}
   ${bidresponses}=  Create Dictionary  bid=${bid}
-  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_data=${bidresponses}
   ${lots}=  Get Variable Value  ${USERS.users['${username}'].tender_data.data.lots}  ${None}
   ${lots_ids}=  Run Keyword IF  ${lots}
   ...     Отримати ідентифікатори об’єктів  ${username}  lots
