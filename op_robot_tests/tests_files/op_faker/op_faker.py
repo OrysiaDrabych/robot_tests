@@ -40,6 +40,7 @@ class OP_Provider(BaseProvider):
             raise Exception("Lower bound: {} is greater then upper: {}.".format(le, ge))
         return int(number * self.random_int(min=le, max=ge) / 100) + 1
 
+
     @classmethod
     def word(self):
         """
