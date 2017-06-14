@@ -1721,13 +1721,13 @@ ${ITEM_MEAT}        ${True}
   Можливість завантажити документ у кваліфікацію 0 пропозиції
 
 
-Можливість дочекатися перевірки учасників по ЄДРПОУ
-  [Tags]   ${USERS.users['${viewer}'].broker}: Перевірка користувачів по ЄДРПОУ
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      pre-qualifications_check_by_edrpou
-  [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Дочекатися перевірки прекваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+# Можливість дочекатися перевірки учасників по ЄДРПОУ
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Перевірка користувачів по ЄДРПОУ
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      pre-qualifications_check_by_edrpou
+#   [Setup]  Дочекатись дати початку періоду прекваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+#   Дочекатися перевірки прекваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
 Можливість підтвердити першу пропозицію кваліфікації

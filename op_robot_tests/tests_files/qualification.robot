@@ -211,13 +211,13 @@ ${award_index}      ${0}
 #             QUALIFICATION
 ##############################################################################################
 
-Можливість дочекатися перевірки переможців по ЄДРПОУ
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Перевірка користувача по ЄДРПОУ
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      qualifications_check_by_edrpou
-  [Setup]  Дочекатись дати початку періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
-  Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
+# Можливість дочекатися перевірки переможців по ЄДРПОУ
+#   [Tags]   ${USERS.users['${tender_owner}'].broker}: Перевірка користувача по ЄДРПОУ
+#   ...      tender_owner
+#   ...      ${USERS.users['${tender_owner}'].broker}
+#   ...      qualifications_check_by_edrpou
+#   [Setup]  Дочекатись дати початку періоду кваліфікації  ${tender_owner}  ${TENDER['TENDER_UAID']}
+#   Дочекатися перевірки кваліфікацій  ${tender_owner}  ${TENDER['TENDER_UAID']}
 
 
 Можливість завантажити документ рішення кваліфікаційної комісії для підтвердження постачальника
