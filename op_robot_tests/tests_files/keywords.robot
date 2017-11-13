@@ -720,6 +720,7 @@ Require Failure
   ...      Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/tenders\/([0-9A-Fa-f]{32})
+  Log  ${url}  WARN
   Log  URL аукціону для глядача: ${url}
 
 
@@ -735,6 +736,7 @@ Require Failure
   ...      Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.prozorro\.openprocurement\.auction\/tenders\/([0-9A-Fa-f]{32})
+  Log  ${url}  WARN
   Log  URL аукціону для учасника: ${url}
 
 

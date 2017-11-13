@@ -52,7 +52,7 @@ Quinta:
             enquiry: [0, 20]
             tender:  [0, 20]
         openua:
-            tender:  [1, 30]
+            tender:  [1, 15]
         openeu:
             tender:  [1, 35]
         openua_defense:
