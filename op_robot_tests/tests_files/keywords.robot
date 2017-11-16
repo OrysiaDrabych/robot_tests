@@ -279,9 +279,9 @@ Get Broker Property By Username
   Log  ${tender}
   ${bid}=  generate_test_bid_data  ${tender.data}
   Log  ${bid}
-  Run keyword and ignore error  Log  Вектор економії:${bid['data']['lotValues'][0]['value']['annualCostsReduction']}  WARN
-  Run keyword and ignore error  Log  Вектор економії для другого лоту:${bid['data']['lotValues'][1]['value']['annualCostsReduction']}  WARN
-  Run keyword and ignore error  Log  Вектор економії:${bid['data']['value']['annualCostsReduction']}  WARN
+  Run keyword and ignore error  Log  ${\n}${\n}Вектор економії для ${username}:${bid['data']['lotValues'][0]['value']['annualCostsReduction']}${\n}${\n}  WARN
+  Run keyword and ignore error  Log  ${\n}${\n}Вектор економії для другого лоту ${username}:${bid['data']['lotValues'][1]['value']['annualCostsReduction']}${\n}${\n}  WARN
+  Run keyword and ignore error  Log  ${\n}${\n}Вектор економії для ${username}:${bid['data']['value']['annualCostsReduction']}${\n}${\n}  WARN
   [Return]  ${bid}
 
 
@@ -726,7 +726,7 @@ Require Failure
   Should Be True  '${url}'
   # Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для глядача: ${url}
-  Log  ${\n}${\n}${url}${\n}${\n}  WARN
+  Log  ${\n}${\n}Посилання для ${username}:${url}${\n}${\n}  WARN
 
 
 Можливість отримати посилання на аукціон для учасника ${username}
@@ -742,7 +742,7 @@ Require Failure
   Should Be True  '${url}'
   # Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.openprocurement\.org\/tenders\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}
-  Log  ${\n}${\n}${url}${\n}${\n}  WARN
+  Log  ${\n}${\n}Посилання для ${username}:${url}${\n}${\n}  WARN
 
 
 Дочекатись дати
