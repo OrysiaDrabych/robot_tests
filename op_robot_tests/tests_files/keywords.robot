@@ -24,7 +24,7 @@ Test Suite Setup
 
 
 Test Suite Teardown
-  Close all browsers
+  # Close all browsers
   Run Keyword And Ignore Error  Створити артефакт
 
 
@@ -228,6 +228,10 @@ Prepare data for tender creation
   ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
   [Return]  ${bid}
 
+Prepare test bid data
+  [Arguments]  ${username}
+  ${bid}=  generate_test_bid_data  ${USERS.users['${username}'].tender_data.data}
+  [Return]  ${bid}
 
 Підготувати дані про постачальника
   [Arguments]  ${username}
@@ -267,7 +271,7 @@ Adapt data for tender announcement
   # тендера користувачем` keyword, so after `Run keyword and ignore error` call
   # ``${adapted_data_from_broker}`` will be ``${None}``. Else - nothing changes.
   \  ${adapted_data_from_broker}=  Set variable if  '${status}' == 'FAIL'  ${adapted_data}  ${adapted_data_from_broker}
-  \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
+  # \  Log differences between dicts  ${adapted_data.data}  ${adapted_data_from_broker.data}  ${username} has changed initial data!
   # Update (or not, if nothing changed) ``${adapted_data}``.
   \  ${adapted_data}=  munchify  ${adapted_data_from_broker}
   \  Log  ${adapted_data}
@@ -504,7 +508,7 @@ Compare objects
   \  Звірити координати тендера  ${viewer}  ${tender_data}  items[${index}]
 
 
-Retrieve tender data
+Отримати дані із тендера
   [Arguments]  ${username}  ${tender_uaid}  ${field_name}  ${object_id}=${Empty}
   ${field}=  Run Keyword If  '${object_id}'  Retrieve path to the object field  ${username}  ${field_name}  ${object_id}
   ...             ELSE  Set Variable  ${field_name}
@@ -568,7 +572,7 @@ Retrieve data from the tender object
   ...      ${cancellation_data['description']}
 
 
-Possibility to retrieve auction link for viewer
+Possibility to get auction link for viewer
   ${timeout_on_wait}=  Get Broker Property By Username  ${viewer}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
   ...                  ${timeout_on_wait} < ${3000}
@@ -583,7 +587,7 @@ Possibility to retrieve auction link for viewer
   Log  Auction URL for viewer: ${url}
 
 
-Possibility to retrieve auction link for ${username}
+Possibility to get auction link for ${username}
   ${timeout_on_wait}=  Get Broker Property By Username  ${username}  timeout_on_wait
   ${timeout_on_wait}=  Set Variable If
   ...                  ${timeout_on_wait} < ${1000}
@@ -592,7 +596,7 @@ Possibility to retrieve auction link for ${username}
   ${url}=  Wait Until Keyword Succeeds
   ...      ${timeout_on_wait}
   ...      15 s
-  ...      Run As  ${username}  Retrieve auction link for viewer  ${TENDER['TENDER_UAID']}
+  ...      Run As  ${username}  Retrieve auction link for provider  ${TENDER['TENDER_UAID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
   Log  URL аукціону для учасника: ${url}

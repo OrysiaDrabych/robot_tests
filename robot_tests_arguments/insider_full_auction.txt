@@ -22,45 +22,45 @@ Ability to find a lot by identificator
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      find_tender
   Завантажити дані про тендер
-  Possibility to find a tender by identificator for all users
+  Можливість знайти тендер по ідентифікатору для усіх користувачів
 
 
-# Viewing of initial lot value
+# Відображення початкової вартості лоту
 #   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
 #   ...      viewer
 #   ...      ${USERS.users['${viewer}'].broker}
 #   ...      tender_view
-#   [Setup]  Wait for platform synchronization  ${viewer}
-#   Retrieve data from tender field value.amount for all users
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+#   Отримати дані із поля value.amount тендера для усіх користувачів
 
 
-# Viewing of lot type
+# Відображення типу оголошеного лоту
 #   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
 #   ...      viewer
 #   ...      ${USERS.users['${viewer}'].broker}
 #   ...      tender_view
-#   Retrieve data from tender field procurementMethodType for all users
+#   Отримати дані із поля procurementMethodType тендера для усіх користувачів
 
 
-# Viewing of tender period end date of the lot
+# Відображення закінчення періоду прийому пропозицій лоту
 #   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
 #   ...      viewer
 #   ...      ${USERS.users['${viewer}'].broker}
 #   ...      tender_view_tenderPeriod  level2
-#   Retrieve data from tender field tenderPeriod.endDate for all users
+#   Отримати дані із поля tenderPeriod.endDate тендера для усіх користувачів
 
-# ##############################################################################################
-# #             AUCTION
-# ##############################################################################################
+##############################################################################################
+#             AUCTION
+##############################################################################################
 
-# Viewing of auction start date
-#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
-#   ...      viewer
-#   ...      ${USERS.users['${viewer}'].broker}
-#   ...      tender_view
-#   [Teardown]  Update LAST_MODIFICATION_DATE
-#   Wait until auction period start date  ${viewer}  ${TENDER['TENDER_UAID']}
-#   Retrieve tender data  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
+Get auction start date
+  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      tender_view
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
 Wait until auction starts
@@ -68,8 +68,8 @@ Wait until auction starts
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
-  [Setup]  Wait for platform synchronization  ${viewer}
-  Wait until auction period start date  ${viewer}  ${TENDER['TENDER_UAID']}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Дочекатись дати початку аукціону  ${viewer}
 
 
 Wait until Dutch stage starts
@@ -81,35 +81,35 @@ Wait until Dutch stage starts
   Дочекатись завершення паузи перед першим раундом
 
 
-Register a bid by the second provider
+Register a bid by provider1
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_before_dutch  level1
-  [Teardown]  Update LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
 
-# Possibility to upload financial license to the bid by provider1
+# Можливість завантажити фінансову ліцензію до пропозиції другим учасником
 #   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
 #   ...      provider1
 #   ...      ${USERS.users['${provider1}'].broker}
 #   ...      make_bid_by_provider1_before_dutch
-#   [Setup]  Wait for platform synchronization  ${provider1}
-#   [Teardown]  Update LAST_MODIFICATION_DATE
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+#   [Teardown]  Оновити LAST_MODIFICATION_DATE
 #   Можливість завантажити фінансову ліцензію в пропозицію користувачем ${provider1}
 
 
-Ability to participate in the auction by the second provider
+Ability to participate in the auction by provider1
   [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_before_dutch
-  Possibility to retrieve auction link for ${provider1}
+  Можливість вичитати посилання на аукціон для ${provider1}
   Відкрити сторінку аукціону для ${provider1}
 
 
-Place a bid by the first provider
+Make a bid by provider
   [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -118,31 +118,31 @@ Place a bid by the first provider
   Зробити заявку
 
 
-Register a bid by the second provider after Dutch auction winner is defined
+Register a bid by provider1 after dutch auction winner is defined
   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_after_dutch  level1
-  [Teardown]  Update LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
 
 
-# Possibility to upload financial license to the bid by provider1
+# Можливість завантажити фінансову ліцензію до пропозиції другим учасником
 #   [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
 #   ...      provider1
 #   ...      ${USERS.users['${provider1}'].broker}
 #   ...      make_bid_by_provider1_after_dutch
-#   [Setup]  Wait for platform synchronization  ${provider1}
-#   [Teardown]  Update LAST_MODIFICATION_DATE
+#   [Setup]  Дочекатись синхронізації з майданчиком  ${provider1}
+#   [Teardown]  Оновити LAST_MODIFICATION_DATE
 #   Можливість завантажити фінансову ліцензію в пропозицію користувачем ${provider1}
 
 
-Ability to participate in the auction by the second provider after Dutch auction winner is defined
+Ability to participate in the auction by provider1 after dutch auction winner is defined
   [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
   ...      make_bid_by_provider1_after_dutch
-  Possibility to retrieve auction link for ${provider1}
+  Можливість вичитати посилання на аукціон для ${provider1}
   Відкрити сторінку аукціону для ${provider1}
 
 
@@ -153,12 +153,12 @@ Wait until Sealed Bid stage starts
   ...      ${USERS.users['${provider}'].broker}
   ...      ${USERS.users['${provider1}'].broker}
   ...      auction
-  [Teardown]  Update LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення прийому пропозицій  ${provider1}  ${TENDER['TENDER_UAID']}
   Дочекатись завершення паузи перед Sealed Bid етапом
 
 
-Place a bid by the second provider
+Make a bid by provider1
   [Tags]   ${USERS.users['${provider1}'].broker}: Процес аукціону
   ...      provider1
   ...      ${USERS.users['${provider1}'].broker}
@@ -178,7 +178,7 @@ Wait until Best Bid stage starts
   Дочекатись завершення паузи перед Best Bid етапом
 
 
-Ability to increase a bid by Dutch auction winner
+Ability to increase a bid by dutch auction winner
   [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
@@ -187,12 +187,12 @@ Ability to increase a bid by Dutch auction winner
   Підвищити ставку переможцем голландської частини
 
 
-Wait until auction ends
+Wait for the end of auction
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction
-  [Teardown]  Update LAST_MODIFICATION_DATE
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
   Дочекатись дати закінчення аукціону
 
 
@@ -201,22 +201,22 @@ Auction period end date field display
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view
-  [Setup]  Wait for platform synchronization  ${viewer}
-  Retrieve tender data  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.endDate  ${TENDER['LOT_ID']}
 
 
 *** Keywords ***
 Дочекатись дати початку аукціону
   [Arguments]  ${username}
-  ${auctionStart}=  Retrieve tender data   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
+  ${auctionStart}=  Отримати дані із тендера   ${username}  ${TENDER['TENDER_UAID']}   auctionPeriod.startDate  ${TENDER['LOT_ID']}
   wait_and_write_to_console  ${auctionStart}
-  Update LAST_MODIFICATION_DATE
-  Wait for platform synchronization  ${username}
+  Оновити LAST_MODIFICATION_DATE
+  Дочекатись синхронізації з майданчиком  ${username}
 
 
 Можливість вичитати посилання на аукціон для ${username}
-  ${url}=  Run Keyword If  '${username}' == '${viewer}'  Run As  ${viewer}  Retrieve auction link for viewer  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
-  ...      ELSE  Run As  ${username}  Retrieve auction link for provider  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  ${url}=  Run Keyword If  '${username}' == '${viewer}'  Run As  ${viewer}  Отримати посилання на аукціон для глядача  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
+  ...      ELSE  Run As  ${username}  Отримати посилання на аукціон для учасника  ${TENDER['TENDER_UAID']}  ${TENDER['LOT_ID']}
   Should Be True  '${url}'
   Should Match Regexp  ${url}  ^https?:\/\/auction(?:-sandbox)?\.ea\.openprocurement\.org\/insider-auctions\/([0-9A-Fa-f]{32})
   Log  URL: ${url}
@@ -224,7 +224,7 @@ Auction period end date field display
 
 
 Відкрити сторінку аукціону для ${username}
-  ${url}=  Possibility to retrieve auction link for ${username}
+  ${url}=  Можливість вичитати посилання на аукціон для ${username}
   Open browser  ${url}  ${USERS.users['${username}'].browser}  ${username}
   Set Window Position  @{USERS['${username}']['position']}
   Set Window Size      @{USERS['${username}']['size']}

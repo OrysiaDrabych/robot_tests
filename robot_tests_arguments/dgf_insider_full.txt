@@ -1,0 +1,15 @@
+-v MODE:dgfInsider
+
+-v NUMBER_OF_ITEMS:1
+
+-i create_tender
+-i find_tender
+-i tender_view1
+-i tender_view_tenderPeriod_startDate_1
+-i make_bid_by_provider_eng
+-i auction_url1
+-i auction_url_provider_1
+-i tender_view_auctionPeriod_StartDate_1
+
+
+-i auction

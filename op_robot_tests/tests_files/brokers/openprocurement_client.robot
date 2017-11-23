@@ -84,6 +84,11 @@ Retrieve internal id by UAid
   openprocurement_client.Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
 
 
+Upload Financial License
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}
+  openprocurement_client.Завантажити документ в ставку з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=financialLicense
+
+
 Завантажити протокол аукціону
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}  ${award_index}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
@@ -187,6 +192,15 @@ Retrieve auction link for viewer
   ${auctionUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${tender.data.lots[${lot_index}].auctionUrl}
   ...                         ELSE  Set Variable  ${tender.data.auctionUrl}
   [return]  ${auctionUrl}
+
+
+Retrieve auction link for provider
+  [Arguments]  ${username}  ${tender_uaid}  ${lot_id}=${Empty}
+  ${bid}=  openprocurement_client.Get bid data  ${username}  ${tender_uaid}
+  ${participationUrl}=  Run Keyword IF  '${lot_id}'  Set Variable  ${bid.data.lotValues[${lot_index}].participationUrl}
+  ...                         ELSE  Set Variable  ${bid.data.participationUrl}
+  [return]  ${participationUrl}
+
 
 ##############################################################################
 #             Tender operations
@@ -359,6 +373,19 @@ Retrieve tender information
   Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
   [return]  ${reply}
 
+Register a bid
+  [Arguments]  ${username}  ${tender_uaid}  ${bid}
+  ${tender}=  openprocurement_client.Tender search by identificator  ${username}  ${tender_uaid}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_bid  ${tender}  ${bid}
+  Log  ${reply}
+  Set To Dictionary  ${reply['data']}  status=active
+  ${reply_active}=  Call Method  ${USERS.users['${username}'].client}  patch_bid  ${tender}  ${reply}
+  Set To Dictionary  ${USERS.users['${username}']}  access_token=${reply['access']['token']}
+  Set To Dictionary   ${USERS.users['${username}'].bidresponses['bid'].data}  id=${reply['data']['id']}
+  Log  ${reply_active}
+  Set To Dictionary  ${USERS.users['${username}']}  bid_id=${reply['data']['id']}
+  [return]  ${reply}
+
 
 Змінити цінову пропозицію
   [Arguments]  ${username}  ${tender_uaid}  ${fieldname}  ${fieldvalue}
@@ -414,6 +441,16 @@ Retrieve tender information
 Отримати пропозицію
   [Arguments]  ${username}  ${tender_uaid}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
+  ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bid_id}
+  ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}
+  ${reply}=  munch_dict  arg=${reply}
+  [return]  ${reply}
+
+
+Get bid data
+  [Arguments]  ${username}  ${tender_uaid}
+  ${tender}=  openprocurement_client.Tender search by identificator  ${username}  ${tender_uaid}
   ${bid_id}=  Get Variable Value  ${USERS.users['${username}'].bid_id}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
   ${reply}=  Call Method  ${USERS.users['${username}'].client}  get_bid  ${tender}  ${bid_id}  ${token}

@@ -3,153 +3,48 @@ Resource        base_keywords.robot
 Suite Setup     Test Suite Setup
 Suite Teardown  Test Suite Teardown
 
-
 *** Variables ***
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 
-
-${NUMBER_OF_ITEMS}  ${1}
-${TENDER_MEAT}      ${True}
-${LOT_MEAT}         ${True}
-${ITEM_MEAT}        ${True}
-
-
 *** Test Cases ***
-Possibility to announce a lot
-  [Tags]   ${USERS.users['${tender_owner}'].broker}: Lot announcement
-  ...      tender_owner
-  ...      ${USERS.users['${tender_owner}'].broker}
-  ...      create_tender  level1
+Ability to successfully announce a lot
+  [Tags]   Lot announcement
+  ...      create_lot
   [Teardown]  Update LAST_MODIFICATION_DATE
-  Possibility to announce a tender
+  Ability to announce a lot
 
 
-Possibility to find a lot by identificator
-  [Tags]   ${USERS.users['${viewer}'].broker}: Lot search
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      find_tender  level1
-  Possibility to find a tender by identificator for all users
+Find a lot by identificator by each role
+  [Tags]   Lot search
+  ...      find_lot
+  Ability to find a lot by identificator by all users
 
 ##############################################################################################
-#             Відображення основних даних лоту
+#                                Bidding
 ##############################################################################################
 
-Viewing of lot name
-  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of lot data
+Place a bid by the first provider
+  [Tags]   Place a bid
+  ...      make_bid_by_provider
+  Place a bid by user ${provider}
+
+
+Ability to get auction link for provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Auction
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      auction_url_provider_1
+  [Setup]  Wait for platform synchronization  ${provider}
+  Possibility to get auction link for ${provider}
+
+
+Auction start date field display
+  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of auction data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_1  level1
+  ...      tender_view_auctionPeriod_StartDate_1
   [Setup]  Wait for platform synchronization  ${viewer}
-  Verify viewing of tender field title for user ${viewer}
-
-
-Відображення номера лоту ФГВ
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level1
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля dgfID тендера для користувача ${viewer}
-
-
-Відображення дати рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_decisionDate
-  Звірити відображення поля dgfDecisionDate тендера для користувача ${viewer}
-
-
-Відображення номера рішення про затвердження умов продажу
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_decisionID
-  Звірити відображення поля dgfDecisionID тендера для користувача ${viewer}
-
-
-Відображення поля "Лоти виставляються"
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_tenderAttempts
-  Звірити поле tenderAttempts тендера для користувача ${viewer}
-
-
-Viewing of lot description
-  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of lot data
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_1  level1
-  Verify viewing of tender field description for user ${viewer}
-
-
-Viewing of initial lot value
-  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of lot data
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view_1  level1
-  Verify viewing of tender field value.amount for all users
-
-
-Відображення валюти лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення поля value.currency тендера для користувача ${viewer}
-
-
-Відображення ПДВ в бюджеті лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення поля value.valueAddedTaxIncluded тендера для користувача ${viewer}
-
-
-Відображення ідентифікатора лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view  level2
-  Звірити відображення поля auctionID тендера із ${TENDER['TENDER_UAID']} для користувача ${viewer}
-
-
-Viewing of procuring entity name
-  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of lot data
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_1  level2
-  Verify viewing of tender field procuringEntity.name for user ${viewer}
-
-
-Відображення початку періоду уточнення лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_enquiryPeriod
-  Отримати дані із поля enquiryPeriod.startDate тендера для усіх користувачів
-
-
-Відображення закінчення періоду уточнення лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view_enquiryPeriod  level2
-  Отримати дані із поля enquiryPeriod.endDate тендера для усіх користувачів
-
-
-Viewing of tender period start date
-  [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of lot data
-  ...      viewer  tender_owner  provider  provider1
-  ...      ${USERS.users['${viewer}'].broker}  ${USERS.users['${tender_owner}'].broker}
-  ...      ${USERS.users['${provider}'].broker}  ${USERS.users['${provider1}'].broker}
-  ...      tender_view_tenderPeriod_startDate_1  level2
-  Retrieve data from tender field tenderPeriod.startDate for all users
+  Possibility to retrieve auction period start date for user ${viewer}
 
 
 Відображення закінчення періоду прийому пропозицій лоту
@@ -835,6 +730,14 @@ Viewing of tender period start date
   Можливість подати цінову пропозицію користувачем ${provider}
 
 
+Place a bid by the first provider
+  [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
+  ...      provider
+  ...      ${USERS.users['${provider}'].broker}
+  ...      make_bid_by_provider_eng  level1
+  Place a bid by user ${provider}
+
+
 Можливість завантажити фінансову ліцензію до пропозиції першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Подання пропозиції
   ...      provider
@@ -981,34 +884,34 @@ Viewing of tender period start date
   Run Keyword And Expect Error  *  Можливість скасувати цінову пропозицію користувачем ${provider1}
 
 
-Possibility to retrieve auction link for viewer
+Ability to get auction link for viewer
   [Tags]   ${USERS.users['${viewer}'].broker}: Auction
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      auction_url_1
   [Setup]  Wait until auction period start date  ${viewer}  ${TENDER['TENDER_UAID']}
-  Possibility to retrieve auction link for viewer
+  Possibility to get auction link for viewer
 
 
-Possibility to retrieve auction link for provider
+Ability to get auction link for provider
   [Tags]   ${USERS.users['${provider}'].broker}: Auction
   ...      provider
   ...      ${USERS.users['${provider}'].broker}
   ...      auction_url_provider_1
   [Setup]  Wait for platform synchronization  ${provider}
-  Possibility to retrieve auction link for ${provider}
+  Possibility to get auction link for ${provider}
 
 
-Possibility to retrieve auction link for provider1
-  [Tags]   ${USERS.users['${provider1}'].broker}: Auction
-  ...      provider1
-  ...      ${USERS.users['${provider1}'].broker}
-  ...      auction_url_1
-  [Setup]  Wait for platform synchronization  ${provider1}
-  Possibility to retrieve auction link for ${provider1}
+# Possibility to retrieve auction link for provider1
+#   [Tags]   ${USERS.users['${provider1}'].broker}: Auction
+#   ...      provider1
+#   ...      ${USERS.users['${provider1}'].broker}
+#   ...      auction_url_1
+#   [Setup]  Wait for platform synchronization  ${provider1}
+#   Possibility to retrieve auction link for ${provider1}
 
 
-Viewing of auction start date
+Auction start date field display
   [Tags]   ${USERS.users['${viewer}'].broker}: Viewing of auction data
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}

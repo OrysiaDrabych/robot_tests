@@ -1,0 +1,102 @@
+access:
+    token: 5b1a98140462468f80921ad8644d9f85
+data:
+    auctionID: UA-EA-2017-11-21-000018-3
+    auctionPeriod:
+        shouldStartAfter: '2017-11-21T19:03:31.864659+02:00'
+    awardCriteria: highestCost
+    date: '2017-11-21T18:47:15.718942+02:00'
+    dateModified: '2017-11-21T18:47:15.732092+02:00'
+    description: Слюзувати поперепалюватися морща відволожувати недомова майстерія
+        кованка висмівати кантурь кантурь клямати буґа.
+    description_en: Tenetur possimus quidem maiores iusto mollitia porro eos alias
+        laboriosam modi reprehenderit sapiente suscipit.
+    description_ru: Омнэжквюы фабулаз долорэж амэт ед латины эжт фюгит жят аппэтырэ.
+    dgfDecisionDate: '2017-11-19'
+    dgfDecisionID: 2236/1
+    dgfID: F45988518-37172
+    documents:
+    -   dateModified: '2017-11-21T18:47:15.719283+02:00'
+        datePublished: '2017-11-21T18:47:15.719260+02:00'
+        documentOf: tender
+        documentType: x_dgfPlatformLegalDetails
+        id: 223e7aabcf8449b1829322e0527c993f
+        title: Місце та форма прийому заяв на участь в аукціоні та банківські реквізити
+            для зарахування гарантійних внесків
+        url: http://torgi.fg.gov.ua/prozorrosale
+    eligibilityCriteria: Учасником електронного аукціону, предметом продажу на яких
+        є права вимоги за кредитними договорами та договорами забезпечення, не може
+        бути користувач, який є позичальником (боржником відносно банку) та/або поручителем
+        (майновим поручителем) за такими кредитними договорами та/або договорами забезпечення.
+    eligibilityCriteria_en: The user, who is the borrower (the debtor of the bank)
+        and/or guarantor (property guarantor) for loan agreements and/or collateral
+        agreements, cannot be the bidder of the electronic auction, where the items
+        for sale are the claim rights on such loan agreements and collateral agreements.
+    eligibilityCriteria_ru: Участником электронного аукциона, предметом продажи на
+        которых являются права требования по кредитным договорам и договорам обеспечения,
+        не может быть пользователь, являющийся заёмщиком (должником относительно банка)
+        и\или поручителем (имущественным поручителем) по таким кредитным договорам
+        и/или договорам обеспечения.
+    enquiryPeriod:
+        endDate: '2017-11-21T19:03:31.864659+02:00'
+        startDate: '2017-11-21T18:47:15.718942+02:00'
+    guarantee:
+        amount: 500000.0
+        currency: UAH
+    id: 332307cb7f5b42128dea6920e61889b8
+    items:
+    -   classification:
+            description: Права вимоги за кредитними договорами
+            id: 07000000-9
+            scheme: CAV
+        description: 'i-cd3ee981: Права вимоги за кредитними договорами'
+        description_en: 'i-42d26d83: Rights and claims under credit agreements'
+        description_ru: 'i-dcac37ab: Права и требования по кредитным договорам'
+        id: 2815ddd875314f0ba01615af2f1ec19f
+        quantity: 47
+        unit:
+            code: E48
+            name: послуга
+    minimalStep:
+        amount: 0.0
+        currency: UAH
+        valueAddedTaxIncluded: true
+    mode: test
+    next_check: '2017-11-21T19:03:31.864659+02:00'
+    owner: test.quintagroup.com
+    procurementMethod: open
+    procurementMethodDetails: quick, accelerator=160
+    procurementMethodType: dgfInsider
+    procuringEntity:
+        address:
+            countryName: Україна
+            locality: Київ
+            postalCode: '04655'
+            region: місто Київ
+            streetAddress: вулиця Богатирська, 32
+        contactPoint:
+            email: kmkshvl@ukr.net
+            faxNumber: 413-41-40
+            name: Чередниченко Олена Юріївна
+            telephone: 426-07-12
+            url: http://skinmedic.com.ua
+        identifier:
+            id: 01994008
+            legalName: Київська міська клінічна шкірно-венерологічна лікарня
+            scheme: UA-EDR
+        kind: special
+        name: Київська міська клінічна шкірно-венерологічна лікарня
+    status: active.tendering
+    submissionMethod: electronicAuction
+    submissionMethodDetails: quick
+    tenderAttempts: 5
+    tenderPeriod:
+        endDate: '2017-11-21T19:13:31.864659+02:00'
+        startDate: '2017-11-21T18:47:15.718942+02:00'
+    title: '[ТЕСТУВАННЯ] Заглитнутися справник хвиґа чортячий.'
+    title_en: '[TESTING] Multi-tiered radical portal'
+    title_ru: '[ТЕСТИРОВАНИЕ] Reduced real-time data-warehouse'
+    value:
+        amount: 691381079.19
+        currency: UAH
+        valueAddedTaxIncluded: true

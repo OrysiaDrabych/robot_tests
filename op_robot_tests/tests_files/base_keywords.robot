@@ -6,32 +6,23 @@ Resource           resource.robot
 
 
 *** Keywords ***
-Possibility to announce a tender
-  ${NUMBER_OF_ITEMS}=  Convert To Integer  ${NUMBER_OF_ITEMS}
-  ${tender_parameters}=  Create Dictionary
-  ...      mode=${MODE}
-  ...      number_of_items=${NUMBER_OF_ITEMS}
-  ...      tender_meat=${${TENDER_MEAT}}
-  ...      item_meat=${${ITEM_MEAT}}
-  ...      api_host_url=${API_HOST_URL}
-  ${DIALOGUE_TYPE}=  Get Variable Value  ${DIALOGUE_TYPE}
-  Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
-  ${tender_data}=  Prepare data for tender creation  ${tender_parameters}
-  ${adapted_data}=  Adapt data for tender announcement  ${tender_data}
-  ${TENDER_UAID}=  Run As  ${tender_owner}  Create tender  ${adapted_data}
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  initial_data=${adapted_data}
-  Set To Dictionary  ${TENDER}  TENDER_UAID=${TENDER_UAID}
+
+Ability to find a lot by identificator for all users
+  :FOR  ${username}  IN  ${auction_owner}  ${provider}  ${provider1}  ${viewer}
+  \  Ability to find a lot by identificator for user ${username}
 
 
-Possibility to find a tender by identificator for all users
-  :FOR  ${username}  IN  ${tender_owner}  ${provider}  ${provider1}  ${viewer}
-  \  Possibility to find a tender by identificator for user ${username}
-
-
-Possibility to find a tender by identificator for user ${username}
+Ability to find a lot by identificator by user ${username}
   Wait for platform synchronization  ${username}
-  Run as  ${username}  Tender search by identificator  ${TENDER['TENDER_UAID']}
+  Run as  ${username}  Auction search by identificator  ${AUCTION['AUCTION_UAID']}
 
+
+Place a bid by user ${username}
+  ${bid}=  Prepare test bid data  ${username}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  ${resp}=  Run As  ${username}  Register a bid  ${TENDER['TENDER_UAID']}  ${bid}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
 
 Можливість змінити поле ${field_name} тендера на ${field_value}
   Run As  ${tender_owner}  Внести зміни в тендер  ${TENDER['TENDER_UAID']}  ${field_name}  ${field_value}
@@ -274,6 +265,14 @@ Retrieve data from tender field ${field} for user ${username}
   ...             Можливість завантажити фінансову ліцензію в пропозицію користувачем ${username}
 
 
+Place a bid by user ${username}
+  ${bid}=  Prepare test bid data  ${username}
+  ${bidresponses}=  Create Dictionary  bid=${bid}
+  Set To Dictionary  ${USERS.users['${username}']}  bidresponses=${bidresponses}
+  ${resp}=  Run As  ${username}  Register a bid  ${TENDER['TENDER_UAID']}  ${bid}
+  Set To Dictionary  ${USERS.users['${username}'].bidresponses}  resp=${resp}
+
+
 Неможливість подати цінову пропозицію без нецінових показників користувачем ${username}
   ${bid}=  Підготувати дані для подання пропозиції  ${username}
   Remove From Dictionary  ${bid.data}  parameters
@@ -313,6 +312,12 @@ Retrieve data from tender field ${field} for user ${username}
 Можливість завантажити фінансову ліцензію в пропозицію користувачем ${username}
   ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
   Run As  ${username}  Завантажити фінансову ліцензію  ${TENDER['TENDER_UAID']}  ${financial_license_path}
+  Remove File  ${financial_license_path}
+
+
+Upload Financial License by user ${username}
+  ${financial_license_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${username}  Upload Financial License  ${TENDER['TENDER_UAID']}  ${financial_license_path}
   Remove File  ${financial_license_path}
 
 

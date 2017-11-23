@@ -13,7 +13,7 @@ users:
         broker:   Quinta
         browser:  chrome
         position: [700, 0]
-        size: [1366, 1200]
+        size: [2000, 700]
     Tender_User1:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
@@ -22,7 +22,7 @@ users:
         broker:   Quinta
         browser:  chrome
         position: [0, 0]
-        size: [1366, 1200]
+        size: [2000, 700]
     Tender_User2:
         auth_ds:
             tenders:  [test.quintagroup.com, test.quintagroup.com]
@@ -108,7 +108,7 @@ users:
         password: wtG3mLD6M
         browser:  Chrome
         position: [0, 0]
-        size:     [1366, 800]
+        size:     [2000, 700]
     DZO_Provider_auction:
         broker:   DZOauctions
         homepage: "http://dz3.byustudio.in.ua"
