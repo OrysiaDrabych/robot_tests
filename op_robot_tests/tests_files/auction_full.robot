@@ -27,14 +27,14 @@ ${round3_bidder2}  id=stage-8
 #             AUCTION
 ##############################################################################################
 
-Відображення дати початку аукціону
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
-  Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
-  Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
+# Відображення дати початку аукціону
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних аукціону
+#   ...      viewer
+#   ...      ${USERS.users['${viewer}'].broker}
+#   ...      tender_view
+#   [Setup]  Дочекатись дати закінчення прийому пропозицій  ${viewer}  ${TENDER['TENDER_UAID']}
+#   Дочекатись дати початку періоду аукціону  ${viewer}  ${TENDER['TENDER_UAID']}
+#   Отримати дані із тендера  ${viewer}  ${TENDER['TENDER_UAID']}  auctionPeriod.startDate  ${TENDER['LOT_ID']}
 
 
 Можливість дочекатися початку аукціону
@@ -87,7 +87,8 @@ ${round3_bidder2}  id=stage-8
   Вибрати учасника, який може зробити ставку
   Спробувати вказати невалідну тривалість дії контракту
   Спробувати вказати невалідний відсоток щорічних платежів
-  Поставити мінімально можливу ставку  8  220  90
+  Обрахувати відповідні дані для ставки  0
+  Поставити мінімально можливу ставку  ${contract_duration_years}  ${contract_duration_days}  ${yearly_payments_percentage}
   Дочекатись учасником закінчення стадії ставок
   Перевірити чи ставка була прийнята  ${round1_bidder1}
 
@@ -98,7 +99,8 @@ ${round3_bidder2}  id=stage-8
   ...      ${USERS.users['${provider1}'].broker}
   ...      auction
   Вибрати учасника, який може зробити ставку
-  Поставити мінімально можливу ставку  8  220  90
+  Обрахувати відповідні дані для ставки  1
+  Поставити мінімально можливу ставку  ${contract_duration_years}  ${contract_duration_days}  ${yearly_payments_percentage}
   Дочекатись учасником закінчення стадії ставок
   Перевірити чи ставка була прийнята  ${round1_bidder2}
 
@@ -319,6 +321,21 @@ ${round3_bidder2}  id=stage-8
   ${CURRENT_USER}=  Set Variable  ${username}
   Set Global Variable  ${CURRENT_USER}
 
+Обрахувати відповідні дані для ставки
+  [Arguments]  ${bid_index}
+  ${current_npv}=  Get Variable Value  ${USERS.users['${viewer}'].tender_data.data.bids[${bid_index}].value.amountPerformance}
+  Log  ${current_npv}
+  ${annual_costs_reduction}=  Get Variable Value  ${USERS.users['${viewer}'].tender_data.data.bids[${bid_index}].value.annualCostsReduction}
+  Log  ${annual_costs_reduction}
+  ${nbu_discount_rate}=  Get Variable Value  ${USERS.users['${viewer}'].tender_data.data.NBUdiscountRate}
+  Log  ${nbu_discount_rate}
+  ${announcement_date}=  Get Variable Value  ${USERS.users['${viewer}'].tender_data.data.tenderPeriod.startDate}
+  Log  ${announcement_date}
+  ${percentage}=  Get Variable Value  ${USERS.users['${viewer}'].tender_data.data.yearlyPaymentsPercentageRange}
+  ${contract_duration_years}  ${contract_duration_days}  ${yearly_payments_percentage}=  npv  ${annual_costs_reduction}  ${announcement_date}  ${nbu_discount_rate}  ${current_npv}
+  Set Suite Variable  ${contract_duration_years}
+  Set Suite Variable  ${contract_duration_days}
+  Set Suite Variable  ${yearly_payments_percentage}
 
 Спробувати вказати невалідну тривалість дії контракту
   Поставити ставку еско  16  6  99  css=input:invalid

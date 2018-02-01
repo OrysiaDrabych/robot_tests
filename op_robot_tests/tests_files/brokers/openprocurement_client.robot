@@ -120,6 +120,7 @@ Library  openprocurement_client.utils
 Отримати посилання на аукціон для учасника
   [Arguments]  ${username}  ${tender_uaid}  ${relatedLot}=${Empty}
   ${bid}=  openprocurement_client.Отримати пропозицію  ${username}  ${tender_uaid}
+  Log  ${bid}
   ${object_with_url}=  get_object_by_id  ${bid.data}  ${relatedLot}  lotValues  relatedLot
   Log  ${object_with_url}
   ${participationUrl}=  Get Variable Value  ${object_with_url['participationUrl']}
