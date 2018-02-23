@@ -320,7 +320,7 @@ def test_tender_data_dgf_other(params):
     data["dgfDecisionID"] = u"219560"
     data["merchandisingObject"] = params['lot_id']
     data["status"] = "draft"
-    data['dgfID'] = fake.dgfID()
+    # data['dgfID'] = fake.dgfID()
     data['tenderAttempts'] =  fake.random_int(min=1, max=4)
     del data["procuringEntity"]
     del data["items"]
