@@ -559,3 +559,8 @@ def convert_amount_string_to_float(amount_string):
 
 def calculate_step_amount(value_amount):
     return value_amount*0.01
+
+def get_amount_of_steps(locator):
+    stages_list= WebDriver.find_element(locator)
+    stages= stages_list.find_elements_by_tag_name("div")
+    return len(stages)

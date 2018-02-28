@@ -109,6 +109,14 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   Відкрити сторінку аукціону для ${provider1}
 
 
+Можливість звірити кількість кроків голландської частини аукціону
+  [Tags]   ${USERS.users['${viewer}'].broker}: Процес аукціону
+  ...      viewer
+  ...      ${USERS.users['${viewer}'].broker}
+  ...      dutchSteps
+  Звірити кількість кроків аукціону для ${viewer}
+
+
 Можливість зробити заявку першим учасником
   [Tags]   ${USERS.users['${provider}'].broker}: Процес аукціону
   ...      provider
@@ -310,6 +318,12 @@ ${sealedbid_amount}  xpath=(//div[contains(concat(' ', normalize-space(@class), 
   [Arguments]  ${username}
   Switch Browser  ${username}
 
+
+Звірити кількість кроків аукціону для ${username}
+  ${dutchSteps}=  Отримати дані із тендера  ${username}  ${TENDER['TENDER_UAID']}  auctionParameters.dutchStep
+  ${left}=  Convert To Integer  ${number_of_awards}
+  ${right}=  Run As  ${username}  Отримати кількість авардів в тендері  ${TENDER['TENDER_UAID']}
+  Порівняти об'єкти  ${left}  ${right}
 
 Зробити заявку
   Wait Until Element Is Visible  id=place-bid-button  2 min
