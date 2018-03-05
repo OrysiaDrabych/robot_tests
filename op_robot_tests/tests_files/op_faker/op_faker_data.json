@@ -2950,6 +2950,76 @@
                 "id": "04000000-8",
                 "description": "Нерухоме майно"
             }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04100000-9",
+                    "description": "Найм"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV",
+                "id": "04100000-9",
+                "description": "Житлова нерухомість"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04111100-0",
+                    "description": "Найм"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV",
+                "id": "04111100-0",
+                "description": "Квартира"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04111200-1",
+                    "description": "Найм"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV",
+                "id": "04111200-1",
+                "description": "Таунхаус"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04112200-8",
+                    "description": "Найм"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV",
+                "id": "04112200-8",
+                "description": "Пентхаус"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04115100-8",
+                    "description": "Найм"
+                }
+            ],
+            "classification": {
+                "scheme": "CAV",
+                "id": "04115100-8",
+                "description": "Котедж"
+            }
         }
     ],
     "units": [
@@ -3035,7 +3105,13 @@
         }
     ],
     "schemes_other": [
-        "04000000-8"
+        "04000000-8",
+        "04100000-9",
+        "04111100-0",
+        "04111200-1",
+        "04112200-8",
+        "04115100-8"
+
     ],
     "items_base_data_other": [
         {
@@ -3043,6 +3119,61 @@
             "description": "Нерухоме майно",
             "description_ru": "Недвижимое имущество",
             "description_en": "Real Estate",
+            "quantity": 15,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+                {
+            "scheme_id": "04100000-9",
+            "description": "Житлова нерухомість",
+            "description_ru": "Жилая недвижимость",
+            "description_en": "Residential Real Estate",
+            "quantity": 15,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "04111100-0",
+            "description": "Квартира",
+            "description_ru": "Квартира",
+            "description_en": "Apartment",
+            "quantity": 15,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "04111200-1",
+            "description": "Таунхаус",
+            "description_ru": "Таунхаус",
+            "description_en": "Townhouse",
+            "quantity": 15,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "04112200-8",
+            "description": "Пентхаус",
+            "description_ru": "Пентхаус",
+            "description_en": "Penthouse",
+            "quantity": 15,
+            "unit": {
+                "code": "MTK",
+                "name": "метри квадратні"
+            }
+        },
+            {
+            "scheme_id": "04115100-8",
+            "description": "Котедж",
+            "description_ru": "Котедж",
+            "description_en": "Cottage",
             "quantity": 15,
             "unit": {
                 "code": "MTK",

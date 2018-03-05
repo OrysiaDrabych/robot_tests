@@ -357,11 +357,11 @@ def fake_schema_properties(cav):
                 "properties": {
                     "year": random.randint(1000, 9999),
                     "floor": random.randint(0, 10),
-                    "livingSpace": random.randint(70, 100),
-                    "landArea": random.randint(70, 100),
-                    "kitchenArea": random.randint(10, 30),
-                    "totalArea": random.randint(10, 1000),
-                    "constructionTechnology": [random.choice([u"монолітно-каркасний", u"панельний", u"утеплена панель", u"цегляний", u"інше"])]
+                    "livingArea": random.randint(0, 100),
+                    "landArea": random.randint(0, 100),
+                    "kitchenArea": random.randint(0, 30),
+                    "totalArea": random.randint(0, 1000),
+                    "constructionTechnology": [random.choice([u"monolithicFrame", u"panel", u"insulatedPanel", u"brick", u"other"])]
                     }
                 }
             }

@@ -267,12 +267,12 @@ ${ASSET_TYPE}        basic
   Звірити відображення поля schema_properties.properties.floor тендера для користувача ${viewer}
 
 
-Відображення поля schema_properties.properties.livingSpace
+Відображення поля schema_properties.properties.livingArea
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних активу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      asset_view
-  Звірити відображення поля schema_properties.properties.livingSpace тендера для користувача ${viewer}
+  Звірити відображення поля schema_properties.properties.livingArea тендера для користувача ${viewer}
 
 
 Відображення поля schema_properties.properties.landArea
@@ -496,26 +496,26 @@ ${ASSET_TYPE}        basic
   Звірити відображення поля schema_properties.properties.floor тендера із ${USERS.users['${tender_owner}'].new_floor} для користувача ${viewer}
 
 
-Можливість змінити schema_properties.properties.livingSpace
+Можливість змінити schema_properties.properties.livingArea
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати актив
   ...      tender_owner
   ...      ${USERS.users['${tender_owner}'].broker}
   ...      modify_asset
   [Setup]  Дочекатись синхронізації з майданчиком  ${tender_owner}
   [Teardown]  Оновити LAST_MODIFICATION_DATE
-  ${new_livingSpace}=  create_fake_year
-  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_livingSpace=${new_livingSpace}
-  Можливість змінити поле schema_properties.properties.livingSpace тендера на ${new_livingSpace}
+  ${new_livingArea}=  create_fake_year
+  Set To Dictionary  ${USERS.users['${tender_owner}']}  new_livingArea=${new_livingArea}
+  Можливість змінити поле schema_properties.properties.livingArea тендера на ${new_livingArea}
 
 
-Відображення зміненого поля schema_properties.properties.livingSpace
+Відображення зміненого поля schema_properties.properties.livingArea
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних активу
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
   ...      modify_asset
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  schema_properties.properties.livingSpace
-  Звірити відображення поля schema_properties.properties.livingSpace тендера із ${USERS.users['${tender_owner}'].new_livingSpace} для користувача ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  schema_properties.properties.livingArea
+  Звірити відображення поля schema_properties.properties.livingArea тендера із ${USERS.users['${tender_owner}'].new_livingArea} для користувача ${viewer}
 
 
 Можливість змінити schema_properties.properties.totalArea
