@@ -181,6 +181,7 @@ Get Broker Property By Username
   ...  ELSE IF  '${MODE}'=='lots'  Set To Dictionary  ${artifact}
       ...          lot_uaid=${USERS.users['${tender_owner}'].tender_data.data.lotID}
       ...          lot_id=${USERS.users['${tender_owner}'].tender_data.data.id}
+      ...          lotIdentifier=${USERS.users['${tender_owner}'].tender_data.data.lotIdentifier}
       ...          tender_owner_access_token=${USERS.users['${tender_owner}'].access_token}
   ...  ELSE  Set To Dictionary  ${artifact}  lot_id=''    assets_id=''    last_modification_date=${TENDER['LAST_MODIFICATION_DATE']}
   Run Keyword And Ignore Error  Set To Dictionary  ${artifact}
@@ -206,6 +207,7 @@ Get Broker Property By Username
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  assets_id=${ARTIFACT.assets_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  lot_id=${ARTIFACT.lot_id}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${viewer}']}  lot_id=${ARTIFACT.lot_id}
+  Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${viewer}']}  lotIdentifier=${ARTIFACT.lotIdentifier}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${tender_owner}']}  access_token=${ARTIFACT.tender_owner_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider}']}  access_token=${ARTIFACT.provider_access_token}
   Run Keyword And Ignore Error  Set To Dictionary  ${USERS.users['${provider1}']}  access_token=${ARTIFACT.provider1_access_token}

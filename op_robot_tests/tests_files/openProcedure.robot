@@ -90,7 +90,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level1
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити відображення поля dgfID тендера для користувача ${viewer}
+  Звірити відображення поля dgfID тендера із ${USERS.users['${viewer}'].lotIdentifier} для користувача ${viewer}
 
 
 Відображення поля "Лоти виставляються"
@@ -196,6 +196,7 @@ ${ITEM_MEAT}        ${True}
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_view  level2
   Звірити відображення поля procurementMethodType тендера для усіх користувачів
+
 
 Відображення поля merchandisingObject
   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
