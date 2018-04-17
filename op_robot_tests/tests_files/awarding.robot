@@ -5,8 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{USED_ROLES}   tender_owner  viewer  provider  provider1
-${MODE}             dgfInsider
-
+${MODE}         dgfOtherAssets
 
 *** Test Cases ***
 ##############################################################################################
@@ -27,25 +26,24 @@ ${MODE}             dgfInsider
   [Tags]   ${USERS.users['${viewer}'].broker}: Процес кваліфікації
   ...      viewer
   ...      ${USERS.users['${viewer}'].broker}
-  ...      award_start_date
+  ...      awarding
   Дочекатись дати початку періоду кваліфікації  ${viewer}  ${TENDER['TENDER_UAID']}
-
 
 ##############################################################################################
 #             AWARDING
 ##############################################################################################
 
 Відображення статусу 'очікується протокол' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
-  ...     first_award_verification_status
+  ...     first_award_pending_status
   [Setup]  Оновити LMD і дочекатись синхронізації  ${viewer}
-  Звірити відображення поля awards[0].status тендера із pending.verification для користувача ${viewer}
+  Звірити відображення поля awards[0].status тендера із pending для користувача ${viewer}
 
 
 Відображення статусу 'очікується кінець кваліфікації' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_waiting_status
@@ -53,12 +51,12 @@ ${MODE}             dgfInsider
   Звірити відображення поля awards[1].status тендера із pending.waiting для користувача ${viewer}
 
 
-Неможливість змінити статус на 'очікується підписання договору' для першого кандидата
+Неможливість підтвердити першого кандидата без завантаженого протоколу
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Подання пропозиції
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
-  ...     change_first_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  0
+  ...     confirm_first_award
+  Require Failure  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
 Можливість завантажити протокол аукціону в авард для першого кандидата
@@ -70,26 +68,7 @@ ${MODE}             dgfInsider
   Можливість завантажити протокол аукціону в авард 0 користувачем ${tender_owner}
 
 
-Можливість підтвердити наявність протоколу аукціону для першого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     approve_first_award_protocol
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  0
-
-
-Відображення статусу 'очікується підписання договору' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     first_award_payment_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
-  Звірити відображення поля awards[0].status тендера із pending.payment для користувача ${viewer}
-
-
-Можливість підтвердити оплату першого кандидата
+Можливість підтвердити першого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
@@ -98,7 +77,7 @@ ${MODE}             dgfInsider
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  0
 
 
-Відображення статусу 'оплачено, очікується підписання договору' для першого кандидата
+Відображення статусу 'очікується внесення оплати та підписання договору' для першого кандидата
   [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
@@ -118,7 +97,7 @@ ${MODE}             dgfInsider
 
 
 Відображення статусу 'cancelled' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_cancelled_status
@@ -147,13 +126,23 @@ ${MODE}             dgfInsider
 
 
 Відображення статусу 'unsuccessful' для першого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     first_award_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[0]}  status
   Звірити відображення поля awards[0].status тендера із unsuccessful для користувача ${viewer}
+
+
+Відображення статусу 'очікується протокол' для другого кандидата
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
+  ...     viewer
+  ...     ${USERS.users['${viewer}'].broker}
+  ...     second_award_pending_status
+  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
+  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
+  Звірити відображення поля awards[1].status тендера із pending для користувача ${viewer}
 
 
 Можливість дискваліфікувати другого кандидата
@@ -176,22 +165,12 @@ ${MODE}             dgfInsider
   Звірити відображення поля awards[1].status тендера із unsuccessful для користувача ${viewer}
 
 
-Відображення статусу 'очікується протокол' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     second_award_verification_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із pending.verification для користувача ${viewer}
-
-
-Неможливість змінити статус на 'очікується підписання договору' для другого кандидата
+Неможливість підтвердити другого кандидата без завантаженого протоколу
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Подання пропозиції
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
-  ...     change_second_award_payment_status
-  Require Failure  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
+  ...     change_second_award_active_status
+  Require Failure  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
 Можливість завантажити протокол аукціону в авард для другого кандидата
@@ -203,26 +182,7 @@ ${MODE}             dgfInsider
   Можливість завантажити протокол аукціону в авард 1 користувачем ${tender_owner}
 
 
-Можливість підтвердити наявність протоколу аукціону для другого кандидата
-  [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
-  ...     tender_owner
-  ...     ${USERS.users['${tender_owner}'].broker}
-  ...     approve_second_award_protocol
-  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
-  Run As  ${tender_owner}  Підтвердити наявність протоколу аукціону  ${TENDER['TENDER_UAID']}  1
-
-
-Відображення статусу 'очікується підписання договору' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
-  ...     viewer
-  ...     ${USERS.users['${viewer}'].broker}
-  ...     change_second_award_payment_status
-  [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data.awards[1]}  status
-  Звірити відображення поля awards[1].status тендера із pending.payment для користувача ${viewer}
-
-
-Можливість підтвердити оплату другого кандидата
+Можливість підтвердити другого кандидата
   [Tags]  ${USERS.users['${tender_owner}'].broker}: Процес кваліфікації
   ...     tender_owner
   ...     ${USERS.users['${tender_owner}'].broker}
@@ -231,8 +191,8 @@ ${MODE}             dgfInsider
   Run As  ${tender_owner}  Підтвердити постачальника  ${TENDER['TENDER_UAID']}  1
 
 
-Відображення статусу 'оплачено, очікується підписання договору' для другого кандидата
-  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення оскарження
+Відображення статусу 'очікується внесення оплати та підписання договору' для другого кандидата
+  [Tags]  ${USERS.users['${viewer}'].broker}: Відображення статусу аварду
   ...     viewer
   ...     ${USERS.users['${viewer}'].broker}
   ...     second_award_active_status
@@ -247,4 +207,4 @@ ${MODE}             dgfInsider
   ...      ${USERS.users['${viewer}'].broker}
   ...      tender_status_unsuccessful
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
-  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']} 
+  Звірити cтатус неуспішного тендера  ${viewer}  ${TENDER['TENDER_UAID']}

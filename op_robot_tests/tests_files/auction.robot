@@ -8,7 +8,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 @{USED_ROLES}   viewer
-${MODE}             dgfInsider
+${MODE}         dgfOtherAssets
 
 *** Test Cases ***
 Можливість знайти лот по ідентифікатору

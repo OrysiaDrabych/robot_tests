@@ -20,7 +20,7 @@ Resource           resource.robot
   Run keyword if  '${DIALOGUE_TYPE}' != '${None}'  Set to dictionary  ${tender_parameters}  dialogue_type=${DIALOGUE_TYPE}
   Run keyword if  '${MODE}' == 'assets'  Set to dictionary  ${tender_parameters}  asset_type=${ASSET_TYPE}
   Run keyword if  '${MODE}' == 'lots'  Set to dictionary  ${tender_parameters}  assets_id=${USERS.users['${tender_owner}'].assets_id}
-  Run keyword if  '${MODE}' == 'dgfInsider'  Set to dictionary  ${tender_parameters}  lot_id=${USERS.users['${tender_owner}'].lot_id}
+  Run keyword if  '${MODE}' == 'dgfOtherAssets'  Set to dictionary  ${tender_parameters}  lot_id=${USERS.users['${tender_owner}'].lot_id}
   ${tender_data}=  Підготувати дані для створення тендера  ${tender_parameters}
   ${adapted_data}=  Адаптувати дані для оголошення тендера  ${tender_data}
   ${TENDER_UAID}=  Run As  ${tender_owner}  Створити тендер  ${adapted_data}

@@ -6,7 +6,7 @@ Suite Teardown  Test Suite Teardown
 
 *** Variables ***
 
-${MODE}             dgfInsider
+${MODE}             dgfOtherAssets
 @{USED_ROLES}       tender_owner  provider  provider1  provider2  viewer
 
 ${TENDER_MEAT}      ${True}

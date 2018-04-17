@@ -317,7 +317,7 @@ def prepare_test_tender_data(procedure_intervals, tender_parameters):
         return munchify({'data': test_asset_data(tender_parameters)})
     if mode == 'lots':
         return munchify({'data': test_lot_data(tender_parameters['assets_id'])})
-    if mode == 'dgfInsider':
+    if mode == 'dgfOtherAssets':
         return munchify({'data': test_tender_data_dgf_other(tender_parameters)})
     raise ValueError("Invalid mode for prepare_test_tender_data")
 
