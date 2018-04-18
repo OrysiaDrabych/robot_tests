@@ -175,9 +175,9 @@ def test_tender_data(params, periods=("enquiry", "tender")):
 
     data["procuringEntity"]["kind"] = "other"
 
-    data['rectificationPeriod'] = {
-            "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
-    }
+    # data['rectificationPeriod'] = {
+    #         "endDate": (get_now() + timedelta(minutes=(random.randint(5, 19) * 1440) / accelerator)).isoformat(),
+    # }
 
     scheme_group = fake.scheme_other()[:4]
     for i in range(params['number_of_items']):
@@ -194,7 +194,7 @@ def test_tender_data(params, periods=("enquiry", "tender")):
     for period_name in periods:
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
-            inc_dt += timedelta(minutes=params['intervals'][period_name][i])
+            inc_dt += timedelta(days=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
 
@@ -307,7 +307,7 @@ def test_tender_data_dgf_other(params):
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
-    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    inc_dt += timedelta(days=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
 

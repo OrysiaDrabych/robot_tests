@@ -325,12 +325,12 @@ ${ITEM_MEAT}        ${True}
   Звірити відображення поля guarantee.amount тендера для усіх користувачів
 
 
-Відображення дати завершення періоду редагування лоту
-  [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
-  ...      viewer
-  ...      ${USERS.users['${viewer}'].broker}
-  ...      tender_view
-  Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
+# Відображення дати завершення періоду редагування лоту
+#   [Tags]   ${USERS.users['${viewer}'].broker}: Відображення основних даних лоту
+#   ...      viewer
+#   ...      ${USERS.users['${viewer}'].broker}
+#   ...      tender_view
+#   Звірити відображення дати rectificationPeriod.endDate тендера для користувача ${viewer}
 
 
 Можливість перевірити тривалість періоду редагування лоту
