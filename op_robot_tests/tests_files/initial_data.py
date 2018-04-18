@@ -54,6 +54,10 @@ def create_fake_date():
     return get_now().isoformat()
 
 
+def create_fake_decisionDate():
+    return get_now().strftime('%Y-%m-%d')
+
+
 def create_fake_dgfDecisionID():
     return fake.dgfDecisionID()
 
@@ -192,7 +196,7 @@ def test_tender_data(params,
     for period_name in periods:
         period_dict[period_name + "Period"] = {}
         for i, j in zip(range(2), ("start", "end")):
-            inc_dt += timedelta(minutes=params['intervals'][period_name][i])
+            inc_dt += timedelta(days=params['intervals'][period_name][i])
             period_dict[period_name + "Period"][j + "Date"] = inc_dt.isoformat()
     data.update(period_dict)
 
@@ -334,7 +338,7 @@ def test_tender_data_dgf_other(params, submissionMethodDetails):
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
-    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    inc_dt += timedelta(days=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
 
@@ -374,7 +378,7 @@ def test_tender_data_dgf_financial(params, submissionMethodDetails):
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
-    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    inc_dt += timedelta(days=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
 
@@ -412,7 +416,7 @@ def test_tender_data_dgf_insider(params, submissionMethodDetails):
     period_dict = {}
     inc_dt = get_now()
     period_dict["auctionPeriod"] = {}
-    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    inc_dt += timedelta(days=params['intervals']['auction'][0])
     period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
     data.update(period_dict)
 
