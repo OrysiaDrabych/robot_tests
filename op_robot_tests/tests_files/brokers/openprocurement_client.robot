@@ -35,16 +35,17 @@ Library  openprocurement_client.utils
 #  Uncomment this line if there is need to precess files operations without DS.
 # ${ds_api_wraper}=  set variable  ${None}
   # ${ds_api_wraper}=  prepare_ds_api_wrapper  ${registry_ds_host_url}  ${auth_ds}
-  ${regisrty_ds_config}=  Create Dictionary  host_url=${registry_ds_host_url}  auth_ds=${auth_ds}
+  # ${regisrty_ds_config}=  Create Dictionary  host_url=${registry_ds_host_url}  auth_ds=${auth_ds}
   ${ds_config}=  Create Dictionary  host_url=${ds_host_url}  auth_ds=${auth_ds}
   # Log  ${ds_api_wraper}
-  ${asset_api_wrapper}=  prepare_asset_api_wrapper  ${USERS.users['${username}'].api_key_registry}  assets  ${registry_api_host_url}  ${registry_api_version}
-  ${lot_api_wrapper}=  prepare_lot_api_wrapper  ${USERS.users['${username}'].api_key_registry}  lots  ${registry_api_host_url}  ${registry_api_version}
-  ${api_wrapper}=  Run Keyword If  '${MODE}'=='assets' or '${MODE}' == 'lots'
-  ...    prepare_api_wrapper  ${USERS.users['${username}'].api_key_registry}  ${resource}  ${registry_api_host_url}  ${registry_api_version}  ${regisrty_ds_config}
-  ...    ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_config}
-  Set To Dictionary  ${USERS.users['${username}']}  asset_client=${asset_api_wrapper}
-  Set To Dictionary  ${USERS.users['${username}']}  lot_client=${lot_api_wrapper}
+  # ${asset_api_wrapper}=  prepare_asset_api_wrapper  ${USERS.users['${username}'].api_key_registry}  assets  ${registry_api_host_url}  ${registry_api_version}
+  # ${lot_api_wrapper}=  prepare_lot_api_wrapper  ${USERS.users['${username}'].api_key_registry}  lots  ${registry_api_host_url}  ${registry_api_version}
+  # ${api_wrapper}=  Run Keyword If  '${MODE}'=='assets' or '${MODE}' == 'lots'
+  # ...    prepare_api_wrapper  ${USERS.users['${username}'].api_key_registry}  ${resource}  ${registry_api_host_url}  ${registry_api_version}  ${regisrty_ds_config}
+  # ...    ELSE  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_config}
+  ${api_wrapper}=  prepare_api_wrapper  ${USERS.users['${username}'].api_key}  ${resource}  ${api_host_url}  ${api_version}  ${ds_config}
+  # Set To Dictionary  ${USERS.users['${username}']}  asset_client=${asset_api_wrapper}
+  # Set To Dictionary  ${USERS.users['${username}']}  lot_client=${lot_api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  client=${api_wrapper}
   Set To Dictionary  ${USERS.users['${username}']}  access_token=${EMPTY}
   ${id_map}=  Create Dictionary
@@ -77,6 +78,11 @@ Library  openprocurement_client.utils
 Завантажити ілюстрацію
   [Arguments]  ${username}  ${tender_uaid}  ${filepath}
   openprocurement_client.Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=illustration
+
+
+Завантажити документ видалення активу
+  [Arguments]  ${username}  ${tender_uaid}  ${filepath}
+  openprocurement_client.Завантажити документ в тендер з типом  ${username}  ${tender_uaid}  ${filepath}  documentType=cancellationDetails
 
 
 Завантажити документ в тендер з типом
@@ -195,9 +201,7 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${USERS.users['${username}']}   access_token=${access_token}
   Set To Dictionary  ${USERS.users['${username}']}   tender_data=${tender}
   Log   ${USERS.users['${username}'].tender_data}
-  Run Keyword if  '${MODE}' == 'assets' or '${MODE}' == 'lots'
-  ...  Log  ${\n}${\n}${registry_api_host_url}/api/${registry_api_version}/${resource}/${tender.data.id}${\n}${\n}  WARN
-  ...  ELSE  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/${resource}/${tender.data.id}${\n}  WARN
+  Log  ${\n}${API_HOST_URL}/api/${API_VERSION}/${resource}/${tender.data.id}${\n}  WARN
   ${ID}=  Run Keyword if  '${MODE}' == 'assets'  Set Variable  ${tender.data.assetID}
   ...  ELSE IF  '${MODE}' == 'lots'  Set Variable  ${tender.data.lotID}
   ...  ELSE  Set Variable  ${tender.data.auctionID}
@@ -527,7 +531,7 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${document}  ${tender_uaid}  ${award_num}
   ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${tender_uaid}
   ${token}=  Get Variable Value  ${USERS.users['${username}'].access_token}
-  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender.data.id}  ${tender.data.awards[${award_num}].id}  access_token=${token} 
+  ${doc}=  Call Method  ${USERS.users['${username}'].client}  upload_award_document  ${document}  ${tender.data.id}  ${tender.data.awards[${award_num}].id}  access_token=${token}
   Log  ${doc}
   [Return]  ${doc}
 

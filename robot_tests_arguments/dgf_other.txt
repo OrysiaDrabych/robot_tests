@@ -29,6 +29,7 @@
 -i asset_view
 -i find_asset
 -i modify_asset
+-i delete_asset
 
 
 #-----------lot-----------#

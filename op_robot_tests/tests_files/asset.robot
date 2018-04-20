@@ -426,9 +426,9 @@ ${ASSET_TYPE}        basic
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.assetCustodian.contactPoint}  name
   Звірити відображення поля assetCustodian.contactPoint.name тендера із ${USERS.users['${tender_owner}'].new_name} для користувача ${viewer}
 
-##############################################################################################
-#             Редагування schema_properties.properties
-##############################################################################################
+#############################################################################################
+            Редагування schema_properties.properties
+#############################################################################################
 
 Можливість змінити schema_properties.properties.year
   [Tags]   ${USERS.users['${tender_owner}'].broker}: Можливість редагувати актив
@@ -560,6 +560,17 @@ ${ASSET_TYPE}        basic
   [Setup]  Дочекатись синхронізації з майданчиком  ${viewer}
   Run Keyword And Ignore Error  Remove From Dictionary  ${USERS.users['${viewer}'].tender_data.data}  schema_properties.properties.kitchenArea
   Звірити відображення поля schema_properties.properties.kitchenArea тендера із ${USERS.users['${tender_owner}'].new_kitchenArea} для користувача ${viewer}
+
+
+Можливість завантажити документ про видалення активу
+  [Tags]  ${USERS.users['${tender_owner}'].broker}: Завантаження документів щодо угоди
+  ...  tender_owner
+  ...  ${USERS.users['${tender_owner}'].broker}
+  ...  contract_sign_upload
+  [Teardown]  Оновити LMD і дочекатись синхронізації  ${tender_owner}
+  ${file_path}  ${file_title}  ${file_content}=  create_fake_doc
+  Run As  ${tender_owner}  Завантажити документ видалення активу  ${TENDER['TENDER_UAID']}  ${file_path}
+  Remove File  ${file_path}
 
 
 Можливість видалити актив

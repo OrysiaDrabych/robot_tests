@@ -88,6 +88,10 @@ class OP_Provider(BaseProvider):
                                     self.random_int(1000, 99999))
 
     @classmethod
+    def dgfDecisionID(self):
+        return "{}-{}".format(self.random_int(1000, 9999), self.random_int(1, 9))
+
+    @classmethod
     def description(self):
         return self.sentence(nb_words=10)
 
