@@ -3020,6 +3020,34 @@
                 "id": "04115100-8",
                 "description": "Котедж"
             }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04115100-8",
+                    "description": "Найм"
+                }
+            ],
+           "classification": {
+               "scheme": "CAV",
+               "id": "06091000-6",
+               "description": "Землі промисловості, транспорту, зв`язку, енергетики, оборони та іншого призначення"
+            }
+        },
+        {
+            "additionalClassifications": [
+                {
+                    "scheme": "CAV",
+                    "id": "04115100-8",
+                    "description": "Найм"
+                }
+            ],
+           "classification": {
+               "scheme": "CAV",
+               "id": "34110000-1",
+               "description": "Легкові автомобілі"
+            }
         }
     ],
     "units": [
@@ -3178,6 +3206,28 @@
             "unit": {
                 "code": "MTK",
                 "name": "метри квадратні"
+            }
+        },
+        {
+            "scheme_id": "06091000-6",
+            "description": "Землі промисловості, транспорту, зв`язку, енергетики, оборони та іншого призначення",
+            "description_ru": "Земли промышленности, транспорта, связи, энергетики, обороны и другого назначения",
+            "description_en": "Lands of industry, transport, communications, energy, defense and other purposes",
+            "quantity": 150,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
+            }
+        },
+                {
+            "scheme_id": "34110000-1",
+            "description": "Легкові автомобілі",
+            "description_ru": "Земли промышленности, транспорта, связи, энергетики, обороны и другого назначения",
+            "description_en": "Lands of industry, transport, communications, energy, defense and other purposes",
+            "quantity": 150,
+            "unit": {
+                "code": "HAR",
+                "name": "гектар"
             }
         }
     ]

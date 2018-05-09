@@ -366,3 +366,43 @@ def fake_schema_properties(cav):
                 }
             }
     return data
+
+
+# def fake_schema_properties(cav):
+#     data = {
+#         "schema_properties" : {
+#                 "code": "06",
+#                 "version": "002",
+#                 "properties": {
+#                     "cadastralNumber": "1234567891:12:345:6547",
+#                     "area": random.randint(10, 1000),
+#                     "ownershipForm": [random.choice([u"state", u"private", u"municipal", u"unknown"])],
+#                     "encumbrances": [random.choice([u"arrest", u"collateral", u"restraintsOnAlienation", u"otherEncumbrances", u"noEncumbrances"])],
+#                     "jointOwnership": random.choice([True, False]),
+#                     "utilitiesAvailability": random.choice([True, False]),
+#                     "inUse": random.choice([True, False])
+#                     }
+#                 }
+#             }
+#     return data
+
+
+# def fake_schema_properties(cav):
+#     data = {
+#         "schema_properties" : {
+#                 "code": "341",
+#                 "version": "001",
+#                 "properties": {
+#                     "make": "BMW",
+#                     "model": "116i",
+#                     "fuelType": [random.choice([u"petrol", u"diesel", u"naturalGas", u"liquefiedPetroleumGas", u"electric", u"hybrid", u"other"])],
+#                     "vehicleTransmission": [random.choice([u"manual", u"automatic", u"semiAutomatic", u"other"])],
+#                     "productionDate": random.randint(1885, 9999),
+#                     "odometer": random.randint(0, 1000),
+#                     "engineDisplacement": random.randint(0, 1000),
+#                     "vehicleIdentificationNumber": "WA-W0",
+#                     "itemCondition": "Справний"
+#                     }
+#                 }
+#             }
+#     return data
