@@ -79,6 +79,19 @@ def create_fake_guarantee(value_amount):
     return round(random.uniform(0.02, 0.1) * value_amount, 2)
 
 
+def create_fake_bankName():
+    return random.choice([u'PrivatBank', u'Oschadbank', u'Raiffeisen Bank Aval', u'KredoBank', u'ProCredit Bank'])
+
+
+def create_fake_scheme_id(scheme):
+    scheme_id = {
+            u'UA-MFO': random.randint(100000, 999999),
+            u'UA-EDR': random.randint(10000000, 99999999),
+            u'accountNumber': random.randint(1000000000, 9999999999)
+    }
+    return scheme_id[scheme]
+
+
 def create_fake_cancellation_reason():
     reasons = [u"Згідно рішення виконавчої дирекції Замовника",
                u"Порушення порядку публікації оголошення"]
@@ -313,6 +326,66 @@ def test_tender_data_dgf_other(params):
 
     data['procurementMethodType'] = 'dgfOtherAssets'
     data["procuringEntity"] = fake.procuringEntity_other()
+
+    for i in range(params['number_of_items']):
+        scheme_group_other = fake.scheme_other()[:4]
+        new_item = test_item_data(scheme_group_other)
+        data['items'].append(new_item)
+    return data
+
+
+def test_tender_data_landLease(params):
+    data = test_tender_data(params, [])
+
+    del data["procuringEntity"]
+    del data['rectificationPeriod']
+
+    for i in range(params['number_of_items']):
+        data['items'].pop()
+
+    url = params['api_host_url']
+    if url == 'https://lb.api.ea.openprocurement.org':
+        del data['procurementMethodDetails']
+
+    period_dict = {}
+    inc_dt = get_now()
+    period_dict["auctionPeriod"] = {}
+    inc_dt += timedelta(minutes=params['intervals']['auction'][0])
+    period_dict["auctionPeriod"]["startDate"] = inc_dt.isoformat()
+    data.update(period_dict)
+
+    data['procurementMethodType'] = 'landLease'
+    data['procuringEntity'] = fake.procuringEntity_other()
+    data['lotHolder'] = fake.procuringEntity()
+    data['lotIdentifier'] = fake.dgfID()
+    data['tenderAttempts'] = fake.random_int(min=1, max=10)
+    data['minNumberOfQualifiedBids'] = int(params['minNumberOfQualifiedBids'])
+    data['registrationFee'] = {
+            "amount": create_fake_guarantee(data['value']['amount']),
+            "currency": u"UAH"
+    }
+    scheme = random.choice([u'UA-EDR', u'UA-MFO', u'accountNumber'])
+    scheme_id = create_fake_scheme_id(scheme)
+    data['bankAccount'] = {
+                "description": fake.description(),
+                "bankName": create_fake_bankName(),
+                "accountIdentification": [{
+                    "scheme": scheme,
+                    "id": scheme_id,
+                    "description": fake.description()
+                }]
+    }
+    data['budgetSpent'] = {
+            "amount": create_fake_amount(3000, 999999999.99),
+            "currency": u"UAH",
+            "valueAddedTaxIncluded": True
+    }
+    data['contractTerms'] = {
+        "type": "lease",
+        "leaseTerms": {
+            "leaseDuration": "P5Y20M"
+        }
+    }
 
     for i in range(params['number_of_items']):
         scheme_group_other = fake.scheme_other()[:4]

@@ -1,0 +1,9 @@
+-v MODE:landLease
+
+-v minNumberOfQualifiedBids:2
+
+-v NUMBER_OF_ITEMS:3
+
+-i create_tender
+-i find_tender
+-i modify_auction_value_tax
