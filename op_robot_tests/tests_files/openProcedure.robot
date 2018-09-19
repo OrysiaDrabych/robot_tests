@@ -5,7 +5,7 @@ Suite Teardown  Test Suite Teardown
 
 
 *** Variables ***
-@{USED_ROLES}       tender_owner  provider  provider1  viewer
+@{USED_ROLES}       tender_owner  provider  provider1  viewer  provider2
 ${MODE}  auctions
 
 *** Test Cases ***
@@ -361,6 +361,15 @@ ${MODE}  auctions
   ...      make_bid_by_provider1
   [Teardown]  Оновити LAST_MODIFICATION_DATE
   Можливість подати цінову пропозицію користувачем ${provider1}
+
+
+Можливість подати пропозицію третім учасником
+  [Tags]   ${USERS.users['${provider1}'].broker}: Подання пропозиції
+  ...      provider1
+  ...      ${USERS.users['${provider1}'].broker}
+  ...      make_bid_by_provider2
+  [Teardown]  Оновити LAST_MODIFICATION_DATE
+  Можливість подати цінову пропозицію користувачем ${provider2}
 
 
 Можливість скасувати пропозицію першим учасником

@@ -824,8 +824,13 @@ Library  openprocurement_client.utils
   [Arguments]  ${username}  ${tender_data}  ${ASSET_UAID}
   Call Method  ${USERS.users['${username}'].asset_public_client}  get_tenders
   ${asset_id}=  Wait Until Keyword Succeeds  5x  30 sec  get_tender_id_by_uaid  ${ASSET_UAID}  ${USERS.users['${username}'].asset_public_client}  id_field=assetID
-  ${tender_data}=  update_lot_data  ${tender_data}  ${asset_id}
   ${ID}=  openprocurement_client.Створити тендер  ${username}  ${tender_data}
+  ${tender}=  openprocurement_client.Пошук тендера по ідентифікатору  ${username}  ${ID}
+  ${related_processes}=  Create Dictionary  type=asset  relatedProcessID=${asset_id}
+  ${related_processes}=  Create Dictionary  data=${related_processes}
+  Log  ${related_processes}
+  ${reply}=  Call Method  ${USERS.users['${username}'].client}  create_related_processes  ${tender}  ${related_processes}
+  Log  ${reply}
   [return]  ${ID}
 
 
@@ -845,7 +850,7 @@ Library  openprocurement_client.utils
   Set To Dictionary  ${auction}  id=${auction_id}
   ${auction}=  Create Dictionary  data=${auction}
   Call Method  ${USERS.users['${username}'].client}  patch_auction  ${tender}  ${auction}
-  Run Keyword If  ${index}==1  openprocurement_client.Змінити статус лоту  ${username}  ${tender}  verification
+  Run Keyword If  ${index}==2  openprocurement_client.Змінити статус лоту  ${username}  ${tender}  verification
 
 
 Пошук лоту по ідентифікатору

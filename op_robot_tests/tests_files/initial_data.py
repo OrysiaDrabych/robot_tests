@@ -354,11 +354,17 @@ def test_lot_auctions_data(index, procedure_intervals, params):
                 }]
             }
         }
-    else:
+    elif index == '1':
         lot_data = {
-            "tenderingDuration": 'P1M',
+            "tenderingDuration": 'PT20M',
             "procurementMethodDetails": 'quick, ' 'accelerator={}'.format(accelerator),
             "submissionMethodDetails": "quick"
+        }
+    else:
+        lot_data = {
+            "tenderingDuration": 'PT20M',
+            "procurementMethodDetails": 'quick, ' 'accelerator={}'.format(accelerator),
+            "submissionMethodDetails": "fast-forward,option2"
         }
     return munchify(lot_data)
 

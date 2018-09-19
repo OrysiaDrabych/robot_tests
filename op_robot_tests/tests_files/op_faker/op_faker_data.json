@@ -3294,9 +3294,9 @@
         {
             "additionalClassifications": [
                 {
-                    "scheme": "CPVS",
-                    "id": "PA01-7",
-                    "description": "Оренда"
+                    "scheme": "kvtspz",
+                    "id": "12.02",
+                    "description": "Для розміщення та експлуатації будівель і споруд морського транспорту"
                 }
             ],
             "classification": {
@@ -3308,9 +3308,9 @@
         {
             "additionalClassifications": [
                 {
-                    "scheme": "UA-EDR",
-                    "id": "PA01-7",
-                    "description": "Оренда"
+                    "scheme": "kvtspz",
+                    "id": "10.09",
+                    "description": "Для проведення науково-дослідних робіт"
                 }
             ],
             "classification": {
@@ -3403,14 +3403,8 @@
         }
     ],
     "schemes_other": [
-        "05110000-9",
-        "04211000-0",
-        "04111000-9",
-        "04151000-1",
-        "04220000-6",
-        "08110000-0",
-        "08160000-5",
-        "42990000-2"
+        "98910000-5",
+        "04151000-1"
     ],
     "items_base_data_other": [
            {

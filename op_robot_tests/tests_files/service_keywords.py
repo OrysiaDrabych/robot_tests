@@ -505,8 +505,12 @@ def generate_test_bid_data(tender_data):
             bid.data.lotValues.append(value)
     else:
         bid.data.update(test_bid_value(tender_data['value']['amount'], tender_data['minimalStep']['amount']))
-    if 'sellout.english' in tender_data.get('procurementMethodType', ''):
+    if 'sellout.english' or 'sellout.insider' in tender_data.get('procurementMethodType', ''):
         bid.data.qualified = True
+    if 'sellout.insider' in tender_data.get('procurementMethodType', ''):
+        bid.data.eligible = True
+        del bid.data['value']
+
     return bid
 
 
