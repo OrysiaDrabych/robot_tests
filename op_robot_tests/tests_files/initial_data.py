@@ -321,7 +321,7 @@ def test_lot_auctions_data(index, procedure_intervals, params):
     if index == '0':
         value_amount = create_fake_amount(3000, 999999999.99)
         lot_data = {
-            "procurementMethodDetails": 'quick, ' 'accelerator={}'.format(accelerator),
+            "procurementMethodDetails": 'quick',
             "submissionMethodDetails": "quick",
             "value": {
                 "amount": value_amount,
